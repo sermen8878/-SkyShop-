@@ -1,17 +1,19 @@
 package org.skypro.skyshop;
 
 import org.skypro.skyshop.basket.ProductBasket;
-import org.skypro.skyshop.product.Product;
+import org.skypro.skyshop.product.DiscountedProduct;
+import org.skypro.skyshop.product.FixPriceProduct;
+import org.skypro.skyshop.product.SimpleProduct;
 
 public class App {
     public static void main(String[] args) {
-        // Создание продуктов
-        Product laptop = new Product("Ноутбук", 150000);
-        Product mouse = new Product("Мышь", 2500);
-        Product keyboard = new Product("Клавиатура", 5000);
-        Product monitor = new Product("Монитор", 80000);
-        Product headphones = new Product("Наушники", 7000);
-        Product webcam = new Product("Веб-камера", 3000);
+        // Создание продуктов разных типов
+        SimpleProduct laptop = new SimpleProduct("Ноутбук", 150000);
+        DiscountedProduct mouse = new DiscountedProduct("Мышь", 2500, 10);
+        FixPriceProduct keyboard = new FixPriceProduct("Клавиатура");
+        SimpleProduct monitor = new SimpleProduct("Монитор", 80000);
+        DiscountedProduct headphones = new DiscountedProduct("Наушники", 7000, 15);
+        FixPriceProduct webcam = new FixPriceProduct("Веб-камера");
 
         // Создание корзины
         ProductBasket basket = new ProductBasket();
@@ -24,13 +26,11 @@ public class App {
         basket.addProduct(headphones);
         basket.addProduct(webcam); // Попытка добавить в заполненную корзину
 
-        // Печать содержимого
+        // Печать содержимого корзины
         basket.printBasket();
 
-        // Получение общей стоимости
+        // Демонстрация других методов
         System.out.println("Общая стоимость: " + basket.getTotalCost());
-
-        // Поиск товаров
         System.out.println("Есть ли мышь в корзине? " + basket.containsProduct("Мышь"));
         System.out.println("Есть ли веб-камера в корзине? " + basket.containsProduct("Веб-камера"));
 
