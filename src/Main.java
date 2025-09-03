@@ -1,15 +1,66 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main {
-    public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+import java.util.Arrays;
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
-    }
+public static void main(String[] args) {
+    // Создание продуктов разных типов
+    SimpleProduct laptop = new SimpleProduct("Ноутбук", 150000);
+    DiscountedProduct mouse = new DiscountedProduct("Мышь", 2500, 10);
+    FixPriceProduct keyboard = new FixPriceProduct("Клавиатура");
+    SimpleProduct monitor = new SimpleProduct("Монитор", 80000);
+    DiscountedProduct headphones = new DiscountedProduct("Наушники", 7000, 15);
+    FixPriceProduct webcam = new FixPriceProduct("Веб-камера");
+
+    // Создание статей
+    Article laptopArticle = new Article("Обзор ноутбука",
+            "Новый ноутбук обладает повышенной производительностью и долгим временем работы от батареи.");
+    Article mouseArticle = new Article("Выбор мыши",
+            "Как выбрать оптимальную мышь для работы и игр.");
+
+    // Создание корзины
+    ProductBasket basket = new ProductBasket();
+
+    // Добавление продуктов в корзину
+    basket.addProduct(laptop);
+    basket.addProduct(mouse);
+    basket.addProduct(keyboard);
+    basket.addProduct(monitor);
+    basket.addProduct(headphones);
+    basket.addProduct(webcam);
+
+    // Печать содержимого корзины
+    basket.printBasket();
+
+    // Создание поискового движка
+    org.skypro.skyshop.search.SearchEngine searchEngine = new org.skypro.skyshop.search.SearchEngine(20);
+
+    // Добавление продуктов и статей в поисковый движок
+    searchEngine.add(laptop);
+    searchEngine.add(mouse);
+    searchEngine.add(keyboard);
+    searchEngine.add(monitor);
+    searchEngine.add(headphones);
+    searchEngine.add(webcam);
+    searchEngine.add(laptopArticle);
+    searchEngine.add(mouseArticle);
+
+    // Демонстрация поиска
+    System.out.println("\n=== Результаты поиска по запросу 'ноутбук' ===");
+    org.skypro.skyshop.search.Searchable[] results = searchEngine.search("ноутбук");
+    System.out.println(Arrays.toString(results));
+
+    System.out.println("\n=== Результаты поиска по запросу 'мышь' ===");
+    results = searchEngine.search("мышь");
+    System.out.println(Arrays.toString(results));
+
+    System.out.println("\n=== Результаты поиска по запросу 'выбор' ===");
+    results = searchEngine.search("выбор");
+    System.out.println(Arrays.toString(results));
+
+    // Демонстрация других методов
+    System.out.println("\n=== Демонстрация методов ===");
+    System.out.println("Общая стоимость: " + basket.getTotalCost());
+    System.out.println("Есть ли мышь в корзине? " + basket.containsProduct("Мышь"));
+
+    // Очистка корзины
+    basket.clearBasket();
+    basket.printBasket();
 }
