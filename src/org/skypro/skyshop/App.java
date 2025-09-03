@@ -1,5 +1,8 @@
 package org.skypro.skyshop;
-
+import org.skypro.skyshop.article.Article;
+import org.skypro.skyshop.search.SearchEngine;
+import org.skypro.skyshop.search.Searchable;
+import java.util.Arrays;
 import org.skypro.skyshop.basket.ProductBasket;
 import org.skypro.skyshop.product.DiscountedProduct;
 import org.skypro.skyshop.product.FixPriceProduct;
