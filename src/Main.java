@@ -4,7 +4,7 @@ public static void main(String[] args) {
     // Создание продуктов разных типов
     SimpleProduct laptop = new SimpleProduct("Ноутбук", 150000);
     DiscountedProduct mouse = new DiscountedProduct("Мышь", 2500, 10);
-    FixPriceProduct keyboard = new FixPriceProduct("Клавиатура");
+    org.skypro.skyshop.product.FixPriceProduct keyboard = new FixPriceProduct("Клавиатура");
     SimpleProduct monitor = new SimpleProduct("Монитор", 80000);
     DiscountedProduct headphones = new DiscountedProduct("Наушники", 7000, 15);
     FixPriceProduct webcam = new FixPriceProduct("Веб-камера");
