@@ -1,34 +1,25 @@
 package org.skypro.skyshop.search;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class SearchEngine {
-    private final Searchable[] searchables;
-    private int itemCount;
+    private final List<Searchable> searchables;
 
-    public SearchEngine(int capacity) {
-        this.searchables = new Searchable[capacity];
-        this.itemCount = 0;
+    public SearchEngine() {
+        this.searchables = new ArrayList<>();
     }
 
     public void add(Searchable searchable) {
-        if (itemCount < searchables.length) {
-            searchables[itemCount] = searchable;
-            itemCount++;
-        } else {
-            System.out.println("Невозможно добавить больше элементов в поисковый движок");
-        }
+        searchables.add(searchable);
     }
 
-    public List<Searchable> search(String query) {
-        List<Searchable> results = new ArrayList<>();
+    public Map<String, Searchable> search(String query) {
+        Map<String, Searchable> results = new TreeMap<>(); // TreeMap для автоматической сортировки по ключам
         String lowerCaseQuery = query.toLowerCase();
 
-        for (int i = 0; i < itemCount && results.size() < 5; i++) {
-            Searchable item = searchables[i];
+        for (Searchable item : searchables) {
             if (item.getSearchTerm().toLowerCase().contains(lowerCaseQuery)) {
-                results.add(item);
+                results.put(item.getName(), item);
             }
         }
 
