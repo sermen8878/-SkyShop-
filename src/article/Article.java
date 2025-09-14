@@ -1,14 +1,34 @@
 package org.skypro.skyshop.article;
 
 import org.skypro.skyshop.search.Searchable;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Article implements Searchable {
-    private final String title;
-    private final String text;
+    // поля класса
 
-    public Article(String title, String text) {
+    public Article(String title, String text, String author,
+                   LocalDateTime publicationDate, Set<String> tags,
+                   int readingTimeMinutes) {
+        if (title == null || title.isBlank()) {
+            throw new IllegalArgumentException("Заголовок статьи не может быть пустым или null");
+        }
+        if (text == null || text.isBlank()) {
+            throw new IllegalArgumentException("Текст статьи не может быть пустым или null");
+        }
+        if (author == null || author.isBlank()) {
+            throw new IllegalArgumentException("Автор статьи не может быть пустым или null");
+        }
+
         this.title = title;
         this.text = text;
+        this.author = author;
+        this.publicationDate = publicationDate != null ? publicationDate : LocalDateTime.now();
+        this.tags = tags != null ? new HashSet<>(tags) : new HashSet<>();
+        this.readingTimeMinutes = readingTimeMinutes > 0 ? readingTimeMinutes : calculateReadingTime(text);
     }
 
     // Реализация методов интерфейса Searchable
