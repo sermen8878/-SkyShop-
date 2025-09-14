@@ -1,5 +1,8 @@
 package org.skypro.skyshop.search;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SearchEngine {
     private final Searchable[] searchables;
     private int itemCount;
@@ -10,22 +13,22 @@ public class SearchEngine {
     }
 
     public void add(Searchable searchable) {
-        if (itemCount >= searchables.length) {
-            System.out.println("Невозможно добавить элемент, достигнут лимит");
-            return;
+        if (itemCount < searchables.length) {
+            searchables[itemCount] = searchable;
+            itemCount++;
+        } else {
+            System.out.println("Невозможно добавить больше элементов в поисковый движок");
         }
-        searchables[itemCount] = searchable;
-        itemCount++;
     }
 
-    public Searchable[] search(String query) {
-        Searchable[] results = new Searchable[5];
-        int foundCount = 0;
+    public List<Searchable> search(String query) {
+        List<Searchable> results = new ArrayList<>();
+        String lowerCaseQuery = query.toLowerCase();
 
-        for (int i = 0; i < itemCount && foundCount < 5; i++) {
-            if (searchables[i].getSearchTerm().toLowerCase().contains(query.toLowerCase())) {
-                results[foundCount] = searchables[i];
-                foundCount++;
+        for (int i = 0; i < itemCount && results.size() < 5; i++) {
+            Searchable item = searchables[i];
+            if (item.getSearchTerm().toLowerCase().contains(lowerCaseQuery)) {
+                results.add(item);
             }
         }
 
