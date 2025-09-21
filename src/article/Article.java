@@ -1,35 +1,49 @@
 package org.skypro.skyshop.article;
 
 import org.skypro.skyshop.search.Searchable;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Objects;
 
 public class Article implements Searchable {
-    // поля класса
+    private final String name;
+    private final String content;
 
-    public Article(String title, String text, String author,
-                   LocalDateTime publicationDate, Set<String> tags,
-                   int readingTimeMinutes) {
-        if (title == null || title.isBlank()) {
-            throw new IllegalArgumentException("Заголовок статьи не может быть пустым или null");
-        }
-        if (text == null || text.isBlank()) {
-            throw new IllegalArgumentException("Текст статьи не может быть пустым или null");
-        }
-        if (author == null || author.isBlank()) {
-            throw new IllegalArgumentException("Автор статьи не может быть пустым или null");
-        }
-
-        this.title = title;
-        this.text = text;
-        this.author = author;
-        this.publicationDate = publicationDate != null ? publicationDate : LocalDateTime.now();
-        this.tags = tags != null ? new HashSet<>(tags) : new HashSet<>();
-        this.readingTimeMinutes = readingTimeMinutes > 0 ? readingTimeMinutes : calculateReadingTime(text);
+    public Article(String name, String content) {
+        this.name = name;
+        this.content = content;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Article article = (Article) o;
+        return Objects.equals(name, article.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
+
+    @Override
+    public String getSearchTerm() {
+        return name;
+    }
+
+    @Override
+    public String getContentType() {
+        return "ARTICLE";
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    public String getContent() {
+        return content;
+    }
+}
 
     // Реализация методов интерфейса Searchable
     @Override
