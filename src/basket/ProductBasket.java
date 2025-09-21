@@ -1,60 +1,38 @@
 package org.skypro.skyshop.basket;
 
 import org.skypro.skyshop.product.Product;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class ProductBasket {
-    private final Map<String, List<Product>> productsMap;
+    private List<Product> products; // Заменяем массив на список
 
     public ProductBasket() {
-        this.productsMap = new HashMap<>();
+        this.products = new ArrayList<>(); // Инициализация списка
     }
 
-    public void add(Product product) {
-        String productName = product.getName();
-        productsMap.computeIfAbsent(productName, k -> new ArrayList<>()).add(product);
+    public void addProduct(Product product) {
+        products.add(product); // Добавление без проверки предела
     }
 
-    public int getTotalCost() {
-        int total = 0;
-        for (List<Product> productList : productsMap.values()) {
-            for (Product product : productList) {
-                total += product.getPrice();
+    // Метод удаления продуктов по имени
+    public List<Product> removeProductsByName(String name) {
+        List<Product> removedProducts = new ArrayList<>();
+        Iterator<Product> iterator = products.iterator();
+        while (iterator.hasNext()) {
+            Product product = iterator.next();
+            if (product.getName().equals(name)) {
+                removedProducts.add(product);
+                iterator.remove();
             }
         }
-        return total;
+        return removedProducts;
     }
 
-    public void printContents() {
-        if (productsMap.isEmpty()) {
-            System.out.println("в корзине пусто");
-            return;
+    public void printBasket() {
+        for (Product product : products) {
+            System.out.println(product.getName() + " - " + product.getPrice());
         }
-
-        int specialCount = 0;
-        for (List<Product> productList : productsMap.values()) {
-            for (Product product : productList) {
-                System.out.println(product.toString());
-                if (product.isSpecial()) {
-                    specialCount++;
-                }
-            }
-        }
-        System.out.println("Итого: " + getTotalCost());
-        System.out.println("Специальных товаров: " + specialCount);
-    }
-
-    public boolean contains(String productName) {
-        return productsMap.containsKey(productName);
-    }
-
-    public void clear() {
-        productsMap.clear();
-    }
-
-    public List<Product> removeByName(String name) {
-        List<Product> removedProducts = productsMap.getOrDefault(name, new ArrayList<>());
-        productsMap.remove(name);
-        return new ArrayList<>(removedProducts);
     }
 }

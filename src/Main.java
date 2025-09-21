@@ -63,4 +63,50 @@ public static void main(String[] args) {
     // Очистка корзины
     basket.clearBasket();
     basket.printBasket();
+package org.skypro.skyshop;
+
+import org.skypro.skyshop.basket.ProductBasket;
+import org.skypro.skyshop.product.Product;
+import org.skypro.skyshop.product.SimpleProduct;
+import org.skypro.skyshop.search.SearchEngine;
+
+import java.util.List;
+
+    public class Main {
+        public static void main(String[] args) {
+            // Создаем корзину и добавляем продукты
+            ProductBasket basket = new ProductBasket();
+            basket.addProduct(new SimpleProduct("Яблоко", 50));
+            basket.addProduct(new SimpleProduct("Банан", 30));
+            basket.addProduct(new SimpleProduct("Яблоко", 50));
+
+            // Демонстрация удаления существующего продукта
+            List<Product> removed = basket.removeProductsByName("Яблоко");
+            System.out.println("Удаленные продукты:");
+            for (Product p : removed) {
+                System.out.println(p.getName());
+            }
+
+            // Вывод корзины после удаления
+            System.out.println("Корзина после удаления:");
+            basket.printBasket();
+
+            // Попытка удалить несуществующий продукт
+            List<Product> notFound = basket.removeProductsByName("Апельсин");
+            if (notFound.isEmpty()) {
+                System.out.println("Список пуст (продукт не найден)");
+            }
+
+            // Демонстрация SearchEngine
+            SearchEngine engine = new SearchEngine();
+            engine.addSearchable(new SimpleProduct("Яблоко", 50));
+            engine.addSearchable(new SimpleProduct("Банан", 30));
+
+            List<Searchable> results = engine.search("Яблоко");
+            System.out.println("Результаты поиска:");
+            for (Searchable s : results) {
+                System.out.println(s.getSearchTerm());
+            }
+        }
+    }
 }
